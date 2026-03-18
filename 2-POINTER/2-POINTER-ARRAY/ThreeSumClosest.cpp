@@ -1,11 +1,44 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution
-{
+class Solution{
 public:
-    int threeSumClosest(vector<int> &nums, int target)
-    {
+    int threeSumClosest(vector<int> &nums, int target){
+
+        int n = nums.size() ;
+
+        sort(begin(nums) , end(nums)) ; 
+
+        int diff = INT_MAX ; 
+        int result = INT_MAX ;
+
+        for(int idx = 0 ; idx < n ; idx ++){
+
+            int i = idx + 1 ; 
+            int j = n - 1 ; 
+
+            while(i < j){
+
+                int sum = nums[i] + nums[j] + nums[idx] ;
+                int currDiff = abs(target - sum) ; 
+
+                if(currDiff < diff){
+                    result = sum ; 
+                    diff = currDiff ; 
+                }
+
+
+                if(sum < target)
+                i ++ ; 
+                else
+                j -- ; 
+            
+                
+            }
+           
+        }
+
+        return result ; 
         
     }
 };
@@ -37,3 +70,6 @@ int main()
 
     return 0;
 }
+
+// Time Complexity : O(n^2)
+// Space Complexity : O(1)

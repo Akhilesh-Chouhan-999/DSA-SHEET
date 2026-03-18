@@ -1,11 +1,52 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution
-{
+class Solution{
 public:
-    vector<vector<int>> fourSum(vector<int> &nums, int target)
-    {
+    vector<vector<int>> fourSum(vector<int> &nums, int target){
+
+        int n = nums.size() ; 
+
+        sort(begin(nums) , end(nums)) ;
+
+        vector<vector<int>>result;
+
+        for(int a = 0 ; a < n ; a ++){
+
+            if( a > 0 && nums[a] == nums[a-1])
+            continue;
+
+            for(int b = a + 1 ; b < n ; b ++){
+
+
+
+                int c = b + 1 ;
+                int d = n - 1 ; 
+
+                while( c < d ){
+
+                    int sum = nums[a] + nums[b] + nums[c] + nums[d] ;
+                    
+                    if(sum == target){
+                    result.push_back({nums[a] , nums[b] , nums[c] , nums[d]}) ;
+                    c ++ ;
+                    d -- ;
+
+
+                  }
+
+                    else if( sum > target)
+                    d -- ; 
+
+                    else
+                    c ++ ; 
+
+                }
+
+
+            }
+        }
+
         
     }
 };
