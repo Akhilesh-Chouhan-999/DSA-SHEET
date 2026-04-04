@@ -120,89 +120,85 @@ Space Complexity : O(1)
 */
 
 
-#include<bits/stdc++.h>
-using namespace std ; 
+
+#include <bits/stdc++.h>
+using namespace std;
 
 class Solution {
 public:
-
     
     int coinChange(vector<int>& coins, int amount) {
 
-        int n = coins.size() ; 
+        int n = coins.size(); 
 
-        vector<vector<int>>dp(n+1 , vector<int>(amount + 1)) ; 
+        vector<vector<int>> dp(n+1, vector<int>(amount + 1, INT_MAX));
 
-        
+        for(int i = 0; i <= n; i++) {
+            dp[i][0] = 0;
+        }
 
+   
+        for(int idx = n - 1; idx >= 0; idx--) {
 
+            for(int amt = 1; amt <= amount; amt++) {
+
+                int takeCoin = INT_MAX;
+
+               
+                if(amt - coins[idx] >= 0) {
+                    int temp = dp[idx][amt - coins[idx]];
+                    if(temp != INT_MAX) {
+                        takeCoin = 1 + temp;
+                    }
+                }
+
+                int skipCoin = dp[idx + 1][amt];
+
+                dp[idx][amt] = min(takeCoin, skipCoin);
+            }
+        }
+
+        return dp[0][amount] == INT_MAX ? -1 : dp[0][amount];
     }
 };
-
-
 
 int main() {
     Solution obj;
 
-    // Test Case 1 (Example)
     vector<int> coins1 = {1, 2, 5};
-    int amount1 = 11;
-    cout << "Test Case 1 Output: "
-         << obj.coinChange(coins1, amount1) << endl;
+    cout << obj.coinChange(coins1, 11) << endl; // 3
 
-    // Test Case 2 (Not possible)
     vector<int> coins2 = {2};
-    int amount2 = 3;
-    cout << "Test Case 2 Output: "
-         << obj.coinChange(coins2, amount2) << endl;
+    cout << obj.coinChange(coins2, 3) << endl; // -1
 
-    // Test Case 3 (Zero amount)
     vector<int> coins3 = {1};
-    int amount3 = 0;
-    cout << "Test Case 3 Output: "
-         << obj.coinChange(coins3, amount3) << endl;
+    cout << obj.coinChange(coins3, 0) << endl; // 0
 
-    // Test Case 4 (Single coin repeated)
     vector<int> coins4 = {3};
-    int amount4 = 9;
-    cout << "Test Case 4 Output: "
-         << obj.coinChange(coins4, amount4) << endl;
+    cout << obj.coinChange(coins4, 9) << endl; // 3
 
-    // Test Case 5 (Greedy fails case)
     vector<int> coins5 = {1, 6, 7, 9, 11};
-    int amount5 = 13;
-    cout << "Test Case 5 Output: "
-         << obj.coinChange(coins5, amount5) << endl;
+    cout << obj.coinChange(coins5, 13) << endl; // 2
 
-    // Test Case 6 (Large amount)
     vector<int> coins6 = {1, 2, 5};
-    int amount6 = 100;
-    cout << "Test Case 6 Output: "
-         << obj.coinChange(coins6, amount6) << endl;
+    cout << obj.coinChange(coins6, 100) << endl;
 
-    // Test Case 7 (No solution)
     vector<int> coins7 = {4, 6};
-    int amount7 = 7;
-    cout << "Test Case 7 Output: "
-         << obj.coinChange(coins7, amount7) << endl;
+    cout << obj.coinChange(coins7, 7) << endl; // -1
 
-    // Test Case 8 (Mixed values)
     vector<int> coins8 = {2, 5, 10, 1};
-    int amount8 = 27;
-    cout << "Test Case 8 Output: "
-         << obj.coinChange(coins8, amount8) << endl;
+    cout << obj.coinChange(coins8, 27) << endl;
 
-    // Test Case 9 (Edge case)
     vector<int> coins9 = {1};
-    int amount9 = 1;
-    cout << "Test Case 9 Output: "
-         << obj.coinChange(coins9, amount9) << endl;
+    cout << obj.coinChange(coins9, 1) << endl; // 1
 
-    // Test Case 10 (Large random case)
     vector<int> coins10 = {186, 419, 83, 408};
-    int amount10 = 6249;
-    cout << "Test Case 10 Output: "
-         << obj.coinChange(coins10, amount10) << endl;
+    cout << obj.coinChange(coins10, 6249) << endl;
 
     return 0;
 }
+
+// Bottom Up : 
+// Time Complexity : O(n*amount)
+// Space Complexity : O(n*amount)
+
