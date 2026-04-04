@@ -4,9 +4,46 @@ using namespace std;
 class Solution
 {
 public:
-    void nextPermutation(vector<int> &nums)
-    {
-       
+    void nextPermutation(vector<int> &nums){
+
+        int n = nums.size() ; 
+
+        int pivot = -1 ; 
+
+        for(int i = n - 2 ; i >= 0 ; i --){
+
+            if(nums[i] < nums[i+1]){
+                pivot = i ; 
+                break; 
+            }
+        } 
+
+        if(pivot == -1){
+            sort(begin(nums) , end(nums)) ; 
+            return ; 
+        }
+
+        int closestElement = INT_MAX ; 
+        int index = -1 ; 
+
+        for(int j = n - 1 ; j > pivot ; j -- ){
+
+            int curr = nums[j] ; 
+
+            if(curr > nums[pivot] ){
+
+                if(curr < closestElement){
+                    closestElement = curr ; 
+                    index = j ; 
+                }
+
+            }
+        }
+
+        swap(nums[pivot] , nums[index]) ; 
+
+        sort(nums.begin() + pivot + 1 , nums.end())  ; 
+
     }
 };
 

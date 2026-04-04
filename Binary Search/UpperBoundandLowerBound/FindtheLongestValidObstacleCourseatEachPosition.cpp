@@ -4,7 +4,37 @@ using namespace std ;
 class Solution {
 public:
     vector<int> longestObstacleCourseAtEachPosition(vector<int>& obstacles) {
-        
+
+        int n = obstacles.size() ; 
+
+
+        vector<int>result ; 
+        vector<int>LIS ;
+
+        LIS.push_back(obstacles[0]) ; 
+        result.push_back(1) ;
+
+        for(int i = 1 ; i < n ; i ++ ){
+
+            if(obstacles[i] >= LIS.back()){
+
+                LIS.push_back(obstacles[i]) ; 
+
+                result.push_back(LIS.size()) ; 
+
+            }
+            else{
+                
+                int idx = upper_bound(begin(LIS) , end(LIS) , obstacles[i]) - LIS.begin() ; 
+
+                LIS[idx] = obstacles[i] ; 
+
+                result.push_back(idx+1) ; 
+
+            }
+        }
+
+        return result ; 
     }
 };
 
@@ -79,3 +109,6 @@ int main() {
 
     return 0;
 }
+
+// Time Complexity : O(n*log(n))
+// Space Complexity : O(n)
