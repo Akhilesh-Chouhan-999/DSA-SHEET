@@ -17,7 +17,7 @@ public:
             return INT_MAX ; 
         }
 
-        if(memo[idx][amount] != -1){
+        if(memo[idx][amount] != -1){t
             return memo[idx][amount]  ; 
         }
 
