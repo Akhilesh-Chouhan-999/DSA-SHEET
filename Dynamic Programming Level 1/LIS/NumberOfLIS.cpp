@@ -1,3 +1,4 @@
+/*
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -18,7 +19,10 @@ public:
 
             if(nums[prev] < nums[idx]) {
 
-                auto [len, f] = solve(nums, prev);
+                 auto p = solve(nums, prev);
+
+                int len = p.first ;
+                int f = p.second ; 
 
                 if(len + 1 > maxLength){
                     maxLength = len + 1; 
@@ -43,7 +47,10 @@ public:
 
         for(int i = 0; i < n; i++) {
 
-            auto [len, f] = solve(nums, i);
+            auto p = solve(nums, i);
+
+            int len = p.first ;
+            int f = p.second ; 
 
             if(len > maxLen) {
                 maxLen = len;
@@ -91,6 +98,89 @@ int main() {
     vector<int> nums6 = {10};
     cout << "Test 6 Output: " << sol.findNumberOfLIS(nums6) << endl;
     // Expected: 1
+
+    return 0;
+}
+    Top Down Approach : 
+    Time Complexity : O(n*n)
+    Space Complexity : O(n)
+*/ 
+
+
+#include<bits/stdc++.h>
+using namespace std;
+
+class Solution {
+public:
+    int findNumberOfLIS(vector<int>& nums) {
+
+        int n = nums.size();
+
+   
+        vector<pair<int,int>> dp(n);
+
+        for(int idx = 0; idx < n; idx++){
+
+            int maxLength = 1; 
+            int freq = 1; 
+
+            for(int prev = idx - 1; prev >= 0; prev--){
+
+                if(nums[prev] < nums[idx]) {
+
+                    auto p = dp[prev];
+                    int len = p.first ; 
+                    int f   = p.second ; 
+
+                    if(len + 1 > maxLength){
+                        maxLength = len + 1; 
+                        freq = f; 
+                    }
+                    else if(len + 1 == maxLength){
+                        freq += f; 
+                    }
+                }
+            }
+
+            dp[idx] = {maxLength , freq};
+        }
+
+        int maxLen = 1;
+        int total = 0;
+
+        for(int i = 0; i < n; i++){
+
+            if(dp[i].first > maxLen){
+                maxLen = dp[i].first;
+                total = dp[i].second;
+            }
+            else if(dp[i].first == maxLen){
+                total += dp[i].second;
+            }
+        }
+
+        return total;
+    }
+};
+
+
+int main() {
+    Solution sol;
+
+    vector<int> nums1 = {1, 3, 5, 4, 7};
+    cout << sol.findNumberOfLIS(nums1) << endl; // 2
+
+    vector<int> nums2 = {2, 2, 2, 2, 2};
+    cout << sol.findNumberOfLIS(nums2) << endl; // 5
+
+    vector<int> nums3 = {1, 2, 3, 4};
+    cout << sol.findNumberOfLIS(nums3) << endl; // 1
+
+    vector<int> nums4 = {5, 4, 3, 2, 1};
+    cout << sol.findNumberOfLIS(nums4) << endl; // 5
+
+    vector<int> nums5 = {1, 2, 4, 3, 5, 4, 7, 2};
+    cout << sol.findNumberOfLIS(nums5) << endl; // 3
 
     return 0;
 }
