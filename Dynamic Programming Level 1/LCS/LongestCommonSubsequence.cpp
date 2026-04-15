@@ -82,12 +82,12 @@ public:
         for(int i = m - 1; i >= 0 ; i --) {
             for(int j = n - 1; j >= 0; j--) {
 
-                   if(s1[i] == s2[j]) {
-                        t[i][j] = 1 + t[i + 1][j + 1];
-                    }
-                    else {
-                        t[i][j] = max(t[i + 1][j] , t[i][j + 1]);
-                    }
+                if(s1[i] == s2[j]) {
+                    t[i][j] = 1 + t[i + 1][j + 1];
+                }
+                else {
+                    t[i][j] = max(t[i + 1][j] , t[i][j + 1]);
+                }
 
             }
         }
