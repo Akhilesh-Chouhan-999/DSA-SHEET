@@ -105,43 +105,29 @@ int main() {
 using namespace std;
 class Solution {
 public:
+bool wordBreak(string s, vector<string>& wordDict) {
+    
+    int n = s.length();
+    unordered_set<string> dict(wordDict.begin(), wordDict.end());
 
-    int memo[301];
+    vector<bool> dp(n + 1, false);
+    dp[n] = true;
 
-    bool solve(string s, set<string>& dict, int idx){
+    for(int i = n - 1; i >= 0; i--){
 
-        if(idx == s.length())
-        return true;
+        for(int l = 1; i + l <= n; l++){
 
-        if(memo[idx] != -1)
-        return memo[idx];
+            string str = s.substr(i, l);
 
-        for(int l = 1; idx + l <= s.length(); l++){
-
-            string str = s.substr(idx , l);
-
-            if(dict.find(str) != dict.end() && solve(s, dict, idx + l)){
-                return memo[idx] = true;
+            if(dict.count(str) && dp[i + l]){
+                dp[i] = true;
+                break;
             }
-
         }
-
-        return memo[idx] = false;
-
     }
 
-    bool wordBreak(string s, vector<string>& wordDict) {
-
-        int n = s.length();
-
-        set<string>dict(begin(wordDict), end(wordDict));
-
-        vector<int>(n + 1, -1);
-
-
-
-       
-    }
+    return dp[0];
+}
 };
 
 int main() {
@@ -201,3 +187,7 @@ int main() {
 
     return 0;
 }
+
+// Bottom Up Approach :
+// Time Complexity : O(n^3)
+// Space Complexity : O(n)
