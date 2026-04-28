@@ -1,20 +1,13 @@
 #include<bits/stdc++.h>
 using namespace std;
-
 class Solution {
 public:
-
-    bool solve(vector<int>& nums, int idx, int k) {
-
-
-    }
     bool canPartitionKSubsets(vector<int>& nums, int k) {
         
-        int n = nums.size();
         
-
     }
 };
+
 
 int main() {
     Solution sol;
