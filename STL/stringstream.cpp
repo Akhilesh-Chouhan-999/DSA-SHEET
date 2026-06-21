@@ -9,7 +9,8 @@ vector<string> tokenize(const string &line, char delimiter) {
 
    string temp ; 
 
-   while(getline(ss , temp , delimiter)){
+   while(getline(ss , temp , delimiter)) {
+    
     tokens.push_back(temp) ; 
    }
    
@@ -25,4 +26,6 @@ int main() {
     for(string word : result) {
         cout << word << "\n";
     }
+
+    return 0;
 }
